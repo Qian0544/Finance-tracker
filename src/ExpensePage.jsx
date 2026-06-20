@@ -8,7 +8,8 @@ function ExpensePage({ entries, addEntry }) {
     const [error, setError] = useState('')
 
     function handleAdd() {
-        if (description.trim === '') {
+        const trimmed = description.trim()
+        if (trimmed === '') {
             setError('Description is required')
             return
         }
