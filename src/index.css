@@ -1,111 +1,242 @@
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+/* ===========================================
+   Finance Tracker — mobile-first theme
+   Styles existing elements; no JSX changes needed.
+   =========================================== */
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
+   :root {
+    --bg-top: #0e3b3a;
+    --bg-bottom: #12504c;
+    --surface: #ffffff;
+    --surface-soft: #f4f8f7;
+    --ink: #16302e;
+    --ink-soft: #5b726f;
+    --accent: #0fb39a;
+    --accent-deep: #0a8c78;
+    --income: #1f9d63;
+    --expense: #e05a4d;
+    --error: #d6453a;
+    --border: #dce8e6;
+    --radius: 14px;
+    --shadow: 0 8px 24px rgba(8, 40, 38, 0.12);
   }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+  
+  * {
+    box-sizing: border-box;
   }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
+  
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(165deg, var(--bg-top), var(--bg-bottom));
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
   }
-}
-
-body {
-  margin: 0;
-}
-
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
+  
+  /* App root — the outer div React renders into */
+  #root {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 28px 18px 60px;
   }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
+  
+  /* Main title */
+  h1 {
+    color: #ffffff;
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    text-align: center;
+    margin: 8px 0 22px;
+  }
+  
+  /* Navigation bar */
+  nav {
+    display: flex;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.12);
+    padding: 6px;
+    border-radius: 999px;
+    margin-bottom: 24px;
+    backdrop-filter: blur(6px);
+  }
+  
+  nav button {
+    flex: 1;
+    border: none;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 14px;
+    font-weight: 600;
+    padding: 11px 8px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.18s ease, color 0.18s ease;
+  }
+  
+  nav button:hover {
+    background: rgba(255, 255, 255, 0.16);
+    color: #ffffff;
+  }
+  
+  nav button:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+  }
+  
+  /* The page content card (the div inside each page component) */
+  #root > div > div {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 22px 20px;
+    box-shadow: var(--shadow);
+  }
+  
+  /* Section headings (Add Expense / Add Income / Summary) */
+  h2 {
     font-size: 20px;
+    font-weight: 700;
+    margin: 0 0 18px;
+    color: var(--ink);
   }
-}
-p {
-  margin: 0;
-}
-
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
-}
+  
+  h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin: 26px 0 12px;
+  }
+  
+  h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent-deep);
+    margin: 18px 0 8px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--surface-soft);
+  }
+  
+  /* Inputs */
+  input {
+    display: block;
+    width: 100%;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+    font-size: 15px;
+    color: var(--ink);
+    background: var(--surface-soft);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease;
+  }
+  
+  input::placeholder {
+    color: #9bb0ad;
+  }
+  
+  input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(15, 179, 154, 0.15);
+    background: #ffffff;
+  }
+  
+  /* Buttons (Add Expense / Add Income) */
+  button {
+    font-family: inherit;
+  }
+  
+  #root > div > div button {
+    width: 100%;
+    padding: 13px;
+    margin-top: 4px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
+    background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.12s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+  }
+  
+  #root > div > div button:hover {
+    opacity: 0.94;
+    box-shadow: 0 6px 16px rgba(10, 140, 120, 0.3);
+  }
+  
+  #root > div > div button:active {
+    transform: translateY(1px);
+  }
+  
+  #root > div > div button:focus-visible {
+    outline: 2px solid var(--accent-deep);
+    outline-offset: 2px;
+  }
+  
+  /* Error / validation messages (the red paragraphs) */
+  p[style] {
+    background: #fdecea;
+    border: 1px solid #f6c9c3;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+    font-weight: 600;
+    /* keep the inline red color from the JSX; just frame it nicely */
+  }
+  
+  /* Summary totals (plain paragraphs) */
+  #root > div > div > p {
+    display: flex;
+    justify-content: space-between;
+    padding: 11px 0;
+    margin: 0;
+    font-size: 15px;
+    border-bottom: 1px solid var(--surface-soft);
+    color: var(--ink-soft);
+    font-weight: 600;
+  }
+  
+  #root > div > div > p:last-of-type {
+    color: var(--ink);
+    font-size: 17px;
+    font-weight: 800;
+    border-bottom: none;
+  }
+  
+  /* Entry lists */
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 14px 0 0;
+  }
+  
+  li {
+    display: flex;
+    align-items: center;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    background: var(--surface-soft);
+    border-radius: 10px;
+    font-size: 14px;
+    color: var(--ink);
+    border-left: 3px solid var(--accent);
+  }
+  
+  /* Date filter inputs sit side by side on the summary */
+  input[type="date"] {
+    display: inline-block;
+    width: auto;
+    min-width: 46%;
+    margin-right: 6px;
+  }
+  
+  @media (max-width: 380px) {
+    input[type="date"] {
+      display: block;
+      width: 100%;
+      margin-right: 0;
+    }
+  }
