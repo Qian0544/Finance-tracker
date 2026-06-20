@@ -12,7 +12,7 @@ function ExpensePage({ entries, addEntry }) {
             setError('Description is required')
             return
         }
-        if (!/^[a-zA-Z0-9 \-]+$/.test(description)) {
+        if (!/^[a-zA-Z0-9 -]+$/.test(description)) {
             setError('Description has invalid characters')
             return
         }

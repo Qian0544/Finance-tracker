@@ -3,7 +3,7 @@ import { useState } from "react";
 function SummaryPage({expenses, incomes}){
     const [startDate, setStartDate] = useState('')
     const [endDate, setEndDate] = useState('')
-    const [filterError, setFilterError] = useState('')
+    
 
     const totalIncome = incomes.reduce((sum,e)=>sum+Number(e.amount),0)
     const totalExpense = expenses.reduce((sum,e)=>sum+Number(e.amount),0)
