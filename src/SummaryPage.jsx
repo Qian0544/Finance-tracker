@@ -6,21 +6,28 @@ function SummaryPage({ expenses, incomes }) {
 
   const rangeInvalid = startDate && endDate && endDate < startDate
 
-  // helper: keep only entries within the date range (or all, if no valid range)
   function inRange(entry) {
     if (!startDate || !endDate || rangeInvalid) return true
     return entry.date >= startDate && entry.date <= endDate
   }
 
-  const filteredExpenses = expenses.filter(inRange)
-  const filteredIncomes = incomes.filter(inRange)
+  // tag each entry with its type and a signed amount, then combine
+  const signedExpenses = expenses
+    .filter(inRange)
+    .map((e) => ({ ...e, type: 'expense', signed: -Number(e.amount) }))
 
-  // totals now reflect the filtered data
-  const totalIncome = filteredIncomes.reduce((sum, e) => sum + Number(e.amount), 0)
-  const totalExpense = filteredExpenses.reduce((sum, e) => sum + Number(e.amount), 0)
+  const signedIncomes = incomes
+    .filter(inRange)
+    .map((e) => ({ ...e, type: 'income', signed: Number(e.amount) }))
+
+  const allEntries = [...signedIncomes, ...signedExpenses]
+
+  // totals from the filtered data
+  const totalIncome = signedIncomes.reduce((sum, e) => sum + Number(e.amount), 0)
+  const totalExpense = signedExpenses.reduce((sum, e) => sum + Number(e.amount), 0)
   const balance = totalIncome - totalExpense
 
-  // helper: group any list of entries by month (YYYY-MM)
+  // group the combined list by month (YYYY-MM)
   function groupByMonth(entries) {
     const byMonth = {}
     for (const entry of entries) {
@@ -33,28 +40,8 @@ function SummaryPage({ expenses, incomes }) {
     return byMonth
   }
 
-  const expensesByMonth = groupByMonth(filteredExpenses)
-  const incomesByMonth = groupByMonth(filteredIncomes)
-
-  // helper: render a grouped section (reused for income and expense)
-  function renderMonths(byMonth) {
-    return Object.keys(byMonth).map((month) => {
-      const monthEntries = byMonth[month]
-      const monthTotal = monthEntries.reduce((sum, e) => sum + Number(e.amount), 0)
-      return (
-        <div key={month}>
-          <h4>{month} — Total: {monthTotal}</h4>
-          <ul>
-            {monthEntries.map((entry, index) => (
-              <li key={index}>
-                {entry.date} - {entry.description}: {entry.amount}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )
-    })
-  }
+  const byMonth = groupByMonth(allEntries)
+  const months = Object.keys(byMonth).sort()
 
   return (
     <div>
@@ -79,11 +66,22 @@ function SummaryPage({ expenses, incomes }) {
       <p>Total Expense: {totalExpense}</p>
       <p>Balance: {balance}</p>
 
-      <h3>Income by Month</h3>
-      {renderMonths(incomesByMonth)}
+      <hr />
 
-      <h3>Expenses by Month</h3>
-      {renderMonths(expensesByMonth)}
+      <h3>By Month</h3>
+      {months.length === 0 && <p style={{ color: 'red' }}>No entries in this range.</p>}
+      {months.map((month) => (
+        <div key={month}>
+          <h4>{month}</h4>
+          <ul>
+            {byMonth[month].map((entry, index) => (
+              <li key={index}>
+                {entry.date} - {entry.description}: {entry.signed}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
     </div>
   )
 }
