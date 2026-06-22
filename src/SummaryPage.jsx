@@ -68,7 +68,7 @@ function SummaryPage({ expenses, incomes }) {
 
       <hr />
 
-      <h3>By Month</h3>
+      <h3>By DATE RANGE</h3>
       {months.length === 0 && <p style={{ color: 'red' }}>No entries in this range.</p>}
       {months.map((month) => (
         <div key={month}>
