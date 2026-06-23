@@ -4,10 +4,10 @@ function SummaryPage({ expenses, incomes }) {
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
 
-  const rangeInvalid = startDate && endDate && endDate < startDate
+  //const rangeInvalid = startDate && endDate && endDate < startDate
 
   function inRange(entry) {
-    if (!startDate || !endDate || rangeInvalid) return true
+    if (!startDate || !endDate ) return true
     return entry.date >= startDate && entry.date <= endDate
   }
 
