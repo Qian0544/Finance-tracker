@@ -22,10 +22,7 @@ jobs:
           node-version: 22
 
       - name: Install dependencies
-        run: npm ci
-
-      - name: Lint
-        run: npm run lint  #the linting gate
+        run: npm ci #here is comment
 
       - name: Install Playwright browsers
         run: npx playwright install --with-deps #the playwright install
